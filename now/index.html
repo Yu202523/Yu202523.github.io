@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Now page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f7;
+      --text: #1c1b19;
+      --text-secondary: #6b6760;
+      --text-tertiary: #a09d98;
+      --border: #e5e2dd;
+      --dot-active: #1c1b19;
+      --dot-inactive: #ccc9c4;
+      --tag-bg: #f0ede8;
+      --tag-text: #6b6760;
+      --link: #6b6760;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #181714;
+        --text: #f0ede8;
+        --text-secondary: #9c9892;
+        --text-tertiary: #635f5a;
+        --border: #2c2924;
+        --dot-active: #f0ede8;
+        --dot-inactive: #3a3732;
+        --tag-bg: #242118;
+        --tag-text: #9c9892;
+        --link: #9c9892;
+      }
+    }
+
+    html { background: var(--bg); color: var(--text); font-size: 16px; }
+
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background: var(--bg);
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      line-height: 1.8;
+    }
+
+    /* ── Header ── */
+    header { margin-bottom: 3.5rem; }
+
+    .site-label {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--text-tertiary);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .header-desc {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── Timeline ── */
+    .timeline { position: relative; }
+
+    .entry {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    /* left column: dot + line */
+    .entry-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 12px;
+      padding-top: 5px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--dot-inactive);
+      flex-shrink: 0;
+    }
+
+    .dot.latest {
+      background: var(--dot-active);
+      width: 10px;
+      height: 10px;
+    }
+
+    .spine-line {
+      width: 1px;
+      flex: 1;
+      background: var(--border);
+      margin-top: 8px;
+      min-height: 2rem;
+    }
+
+    /* right column: content */
+    .entry-content {
+      flex: 1;
+      padding-bottom: 3rem;
+    }
+
+    .entry-date {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 1.25rem;
+    }
+
+    .section { margin-bottom: 1.5rem; }
+
+    .section-label {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-body {
+      font-size: 14.5px;
+      line-height: 1.95;
+      color: var(--text);
+    }
+
+    .section-body em {
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 11px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 3px;
+      padding: 2px 8px;
+      margin: 2px 4px 2px 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    footer a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 2rem 1.25rem 4rem; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="site-label">yourname.github.io/now</p>
+    <h1>現在</h1>
+    <p class="header-desc">不是履歷，是此刻的切片。<br>每次更新都會留著。</p>
+  </header>
+
+  <div class="timeline">
+
+    <!--
+      ════════════════════════════════════════
+      新增更新時，在這裡複製一個 <div class="entry"> 區塊
+      填上日期與內容，其他舊的往下推即可
+      ════════════════════════════════════════
+    -->
+
+    <!-- ★ 最新更新 -->
+    <div class="entry">
+      <div class="entry-spine">
+        <div class="dot latest"></div>
+        <div class="spine-line"></div>
+      </div>
+      <div class="entry-content">
+        <p class="entry-date">2026/06</p>
+
+        <div class="section">
+          <p class="section-label">在做</p>
+          <p class="section-body">
+            結束碩士一年級，碩士第一天感覺像昨天的事，請問我的碩論題目在哪裡？<br>
+            打算在暑假好好做一個自己喜歡的小專案，希望可以順利完成。
+          </p>
+        </div>
+
+        <div class="section">
+          <p class="section-label">在讀</p>
+          <p class="section-body">
+            《자존심 수업》— <em>讀到一半，已經續借兩次還沒讀完。</em>
+          </p>
+        </div>
+
+        
+        <div class="section">
+          <p class="section-label">在看</p>
+          <p class="section-body">
+            《弱美男英雄 class1》— <em>對我來說還是太動作了，但是很喜歡，愛playlist製作。</em>
+            《戀愛革命》— <em>好懷念的2020s韓國網路劇風格，真的是因為沒上youtube所以當年沒看。</em>
+            《菜鳥炊事兵》— <em>tving出品根本品質保證，最後一集收得很漂亮，喜歡。</em>
+          </p>
+        </div>
+
+        
+        <div class="section">
+          <p class="section-label">在學</p>
+          <p class="section-body">
+            <span class="tag">怎麼擁有一個穩定的自尊</span>
+            <span class="tag">還在學日文，感覺沒什麼進展</span>
+          </p>
+        </div>
+
+        <div class="section">
+          <p class="section-label">雜談</p>
+          <p class="section-body">需要一些刺激來督促我去把想做的事都做一做</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 舊更新 1 -->
+    <div class="entry">
+      <div class="entry-spine">
+        <div class="dot"></div>
+        <div class="spine-line"></div>
+      </div>
+      <div class="entry-content">
+        <p class="entry-date">2026/05</p>
+
+        <div class="section">
+          <p class="section-label">在做</p>
+          <p class="section-body">
+            生日月，每週都出去走走晃晃。
+          </p>
+        </div>
+
+        
+        <div class="section">
+          <p class="section-label">在讀</p>
+          <p class="section-body">
+            《자존심 수업》— <em>借一個月了，還沒讀完。</em>
+          </p>
+        </div>
+
+        <div class="section">
+          <p class="section-label">在看</p>
+          <p class="section-body">
+            《尋找金鐘旭》Showcase— <em>大學路長壽音樂劇，每次在惠化都被我略過。</em>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 舊更新 2（最後一筆，不需要 spine-line） -->
+    <div class="entry">
+      <div class="entry-spine">
+        <div class="dot"></div>
+      </div>
+      <div class="entry-content">
+        <p class="entry-date">2026/04</p>
+
+        <div class="section">
+          <p class="section-label">在做</p>
+          <p class="section-body">
+            努力WLB，規劃了很多活動讓自己出門<br>
+          </p>
+        </div>
+
+        <div class="section">
+          <p class="section-label">在看</p>
+          <p class="section-body">
+            《Beautiful Life》— <em>從問卷調查就很想去看，結果最後是朋友送我票去看的。</em>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- end .timeline -->
+
+  <footer>
+    這是一個 <a href="https://nownownow.com/about">/now 頁面</a>，
+    每次更新新增在最上方，舊的會留著。
+  </footer>
+
+</body>
+</html>
